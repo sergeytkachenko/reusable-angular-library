@@ -1,49 +1,144 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+	<title>reveal.js</title>
 
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/black.css">
 
-		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+	<style>
+		code mark {
+			background-color: darkorange;
+		}
+		code comment {
+			color: grey;
+			font-weight: bold;
+		}
+	</style>
 
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
-		</div>
+	<!-- Theme used for syntax highlighting of code -->
+	<!--<link rel="stylesheet" href="lib/css/zenburn.css">-->
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.js"></script>
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName('head')[0].appendChild(link);
+	</script>
+</head>
+<body>
+<div class="reveal">
+	<div class="slides">
 
-		<script>
-			// More info about config & dependencies:
-			// - https://github.com/hakimel/reveal.js#configuration
-			// - https://github.com/hakimel/reveal.js#dependencies
-			Reveal.initialize({
-				dependencies: [
-					{ src: 'plugin/markdown/marked.js' },
-					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
-				]
-			});
-		</script>
-	</body>
+		<section data-markdown data-background-color="#2a77d5">
+			## Development
+			## reusable
+			## angular "components"
+		</section>
+		<section data-markdown>
+			# why?
+		</section>
+		<section data-markdown>
+			##### isolation code
+			##### component versions
+			##### sharing components between projects
+			##### quick ci
+		</section>
+		<section data-markdown>
+			## individual repository
+			## for a individual "component"
+		</section>
+		<section data-markdown>
+			# how?
+		</section>
+		<section>
+			<pre><code data-trim data-noescape>
+				ng new <mark>--create-application false</mark> my-library-name
+			</code></pre>
+			<img src="img/new-lib.jpg" />
+		</section>
+		<section>
+			<pre><code data-trim data-noescape>
+$ cd my-library-name
+$ tree -I node_modules
+.
+├── README.md
+├── angular.json
+├── package-lock.json
+├── package.json
+├── tsconfig.json
+└── tslint.json
+
+0 directories, 6 files
+			</code></pre>
+
+			So, we created empty app, without app.module.ts
+		</section>
+		<section>
+			<pre><code data-trim data-noescape>
+				ng <mark>generate library</mark> my-library-name
+			</code></pre>
+			<img src="img/generate-lib.jpg" width="500" />
+		</section>
+		<section>
+			<pre><code data-trim data-noescape style="font-size: 14px; line-height: 15px;">
+$ tree -I node_modules
+.
+├── README.md
+├── angular.json
+├── package-lock.json
+├── package.json
+├── projects
+│   └── <mark>my-library-name</mark> <comment># - library name</comment>
+│       ├── karma.conf.js
+│       ├── ng-package.json
+│       ├── package.json
+│       ├── src
+│       │   ├── <mark>lib</mark> <comment># - library code</comment>
+│       │   │   ├── my-library-name.component.spec.ts
+│       │   │   ├── my-library-name.component.ts
+│       │   │   ├── my-library-name.module.ts
+│       │   │   ├── my-library-name.service.spec.ts
+│       │   │   └── my-library-name.service.ts
+│       │   ├── <mark>public_api.ts</mark> <comment># - provide library API</comment>
+│       │   └── test.ts
+│       ├── tsconfig.lib.json
+│       ├── tsconfig.spec.json
+│       └── tslint.json
+├── tsconfig.json
+└── tslint.json
+
+4 directories, 19 files
+			</code></pre>
+		</section>
+	</div>
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+	// More info about config & dependencies:
+	// - https://github.com/hakimel/reveal.js#configuration
+	// - https://github.com/hakimel/reveal.js#dependencies
+	Reveal.initialize({
+		dependencies: [
+			{src: 'plugin/markdown/marked.js'},
+			{src: 'plugin/markdown/markdown.js'},
+			{src: 'plugin/notes/notes.js', async: true},
+			{
+				src: 'plugin/highlight/highlight.js', async: true, callback: function () {
+					hljs.initHighlightingOnLoad();
+				}
+			}
+		]
+	});
+</script>
+</body>
 </html>
+
